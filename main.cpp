@@ -6,7 +6,15 @@
 #include "Dominio/Partida.h"
  
 using namespace std;
+/**
+ * La implementación de las clases "nodoPartida" y "listaPartida" fueron agregados en el main por un problema que llevaba desde el
+ * primer taller, así que para no perder tiempo, hice estas dos clases en el main.
+*/
 
+
+/**
+ * Clase que representa un nodo de la lista de partidas
+*/
 class nodoPartida
 {
 private:
@@ -15,7 +23,6 @@ private:
     nodoPartida* anterior;
 public:
     nodoPartida();
-    ~nodoPartida();
     nodoPartida* getSiguiente();
     void setSiguiente(nodoPartida* nodo);
     nodoPartida* getAnterior();
@@ -23,42 +30,60 @@ public:
     Partida* getPartida();
     void setPartida(Partida* game);
 };
-
+/**
+ * Constructor por defecto
+*/
 nodoPartida::nodoPartida()
 {
 }
-
-nodoPartida::~nodoPartida()
-{
-}
-
+/**
+ * Metodo para obtener el nodo siguiente
+*/
 nodoPartida* nodoPartida::getSiguiente(){
     return this->siguiente;
 }
 
+/**
+ * Modifica el atributo "siguiente" de la clase "nodoPartida".
+ * @param nodo El nuevo nodoPartida "siguiente" que reemplazará al anterior.
+ */
 void nodoPartida::setSiguiente(nodoPartida* nodo){
     this->siguiente = nodo;
 }
 
+/**
+ * Metodo para obtener el nodo anterior
+*/
 nodoPartida* nodoPartida::getAnterior(){
     return this->anterior;
 }
 
+/**
+ * Modifica el atributo "anterior" de la clase "nodoPartida".
+ * @param nodo El nuevo nodoPartida "anterior" que reemplazará al anterior.
+ */
 void nodoPartida::setAnterior(nodoPartida* nodo){
     this->anterior = nodo;
 }
 
+/**
+ * Metodo para obtener el nodo partida
+*/
 Partida* nodoPartida::getPartida(){
     return this->partida;
 }
 
+/**
+ * Modifica el atributo "partida" de la clase "nodoPartida".
+ * @param game El nuevo nodoPartida "game" que reemplazará al anterior.
+ */
 void nodoPartida::setPartida(Partida* game){
     this->partida = game;
 }
 
-
-
-
+/**
+ * Clase que representa una lista de partidas
+*/
 class listaPartida {
 private:
     nodoPartida* cabeza;
@@ -67,19 +92,19 @@ private:
 
 public:
     listaPartida();
-    ~listaPartida();
-
     void agregarPartida(Partida* game);
     void mostrarPartidas();
 };
 
+/**
+ * Constructor por defecto
+*/
 listaPartida::listaPartida(){
     this->cantidad = 0;
 }
-
-listaPartida::~listaPartida() {
-}
-
+/**
+ * Método para agregar una nueva partida a la lista
+*/
 void listaPartida::agregarPartida(Partida* game) {
     nodoPartida* nuevoNodo = new nodoPartida();
     nuevoNodo->setPartida(game);
@@ -94,7 +119,9 @@ void listaPartida::agregarPartida(Partida* game) {
     }
     cantidad++;
 }
-
+/**
+ * Método para mostrar las partidas en la lista
+*/
 void listaPartida::mostrarPartidas() {
     nodoPartida* actual = cabeza;
 
