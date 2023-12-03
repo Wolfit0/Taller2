@@ -20,6 +20,7 @@ public:
 };
 
 
+
 Minimax::Minimax()
 {
 }

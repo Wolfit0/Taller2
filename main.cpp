@@ -110,8 +110,8 @@ void listaPartida::mostrarPartidas() {
     }
 }
 
-Partida* partidaContraIA(int contGame);
-Partida* partidaContraJugador(int contGame);
+Partida* partidaContraIA(int contGame,Partida* partida);
+Partida* partidaContraJugador(int contGame,Partida* partida);
 string nickParaJugador();
 bool verificarJugada(int columna);
 int nivelDeDificultad();
@@ -136,7 +136,7 @@ int main() {
         cin>>opcion;
 
         if(opcion == 1){
-            Partida* gameVsIA = partidaContraIA(contGame);
+            Partida* gameVsIA = partidaContraIA(contGame,nullptr);
             if(gameVsIA->getNombrePartida() == "Partida guardada"){
                 gameReanuder = gameVsIA;
                 
@@ -146,7 +146,7 @@ int main() {
             }
         }
         else if(opcion == 2){
-            Partida* gamerVSPlayer = partidaContraJugador(contGame);
+            Partida* gamerVSPlayer = partidaContraJugador(contGame,nullptr);
             if(gamerVSPlayer->getNombrePartida() == "Partida guardada"){
                 gameReanuder = gamerVSPlayer;
             }
@@ -158,7 +158,15 @@ int main() {
             gamesSave->mostrarPartidas();
         }
         else if(opcion == 4){
-           cout<<gameReanuder->getJuego()<<endl;
+            if(gameReanuder == nullptr){
+                cout<<"No ha guardado ningun juego"<<endl;
+            }
+            else{
+                if(gameReanuder->getJugador2() == nullptr){
+                    partidaContraIA(contGame,gameReanuder);
+                }
+            }
+           
         }
         else if(opcion == 5){
             cout<<"Cerrando sistema....."<<endl;
@@ -175,15 +183,20 @@ int main() {
 
 
 
-Partida* partidaContraIA(int contGame){
+Partida* partidaContraIA(int contGame,Partida* partida){
 
     int nivel = nivelDeDificultad();
     while(nivel == 0){
         nivel = nivelDeDificultad();
     }
     Jugador* jugador1 = ingresarDatosJugador();
-
-    Juego* juego = new Juego();
+    Juego* juego;
+    if(partida != nullptr){
+        juego = partida->getJuego();
+    }
+    else{
+        juego = new Juego();
+    }
     Minimax* minimax = new Minimax();
 
     cout<<"MAPA DEL JUEGO"<<endl;
@@ -191,7 +204,7 @@ Partida* partidaContraIA(int contGame){
     cout<<"----------------------------------------"<<endl;
     while(!juego->juegoTerminado() && !juego->matrizLlena()){
         int columnaJugador1;
-        cout<<"Turno del jugador humano. Ingrese columna (0-6): ";
+        cout<<"Turno del jugador humano. Ingrese columna (0-6): "<<endl;
         cin>>columnaJugador1;
 
         juego->hacerMovimiento(1, columnaJugador1-1);
@@ -202,7 +215,7 @@ Partida* partidaContraIA(int contGame){
         }
 
         int columnaJugador2 = minimax->minimax(juego, 0, nivel, 2);
-        cout<<"Turno de la IA. Ingreos columna: "<<columnaJugador2;
+        cout<<"Turno de la IA. Ingreos columna: "<<columnaJugador2<<endl;
         juego->hacerMovimiento(2, columnaJugador2);
 
         juego->dibujarJuego();
@@ -230,23 +243,29 @@ Partida* partidaContraIA(int contGame){
         cout<<"El juego termina en empate."<<endl;
     }
 
-    Partida* partida = new Partida();
-    partida->setJuego(juego);
-    partida->setJugador1(jugador1);
-    partida->setJugador2(nullptr);
+    Partida* gamesave = new Partida();
+    gamesave->setJuego(juego);
+    gamesave->setJugador1(jugador1);
+    gamesave->setJugador2(nullptr);
     string nameGame = "Partida "+contGame;
     contGame++;
-    return partida;
+    return gamesave;
 
 
 }
 
-Partida* partidaContraJugador(int contGame){
+Partida* partidaContraJugador(int contGame,Partida* partida){
 
     Jugador* jugador1 = ingresarDatosJugador();
     Jugador* jugador2 = ingresarDatosJugador();
 
-    Juego* juego = new Juego();
+    Juego* juego;
+    if(partida != nullptr){
+        juego = partida->getJuego();
+    }
+    else{
+        juego = new Juego();
+    }
     
     cout<<"MAPA DEL JUEGO"<<endl;
     juego->dibujarJuego();
@@ -295,13 +314,13 @@ Partida* partidaContraJugador(int contGame){
         cout<<"El juego termina en empate."<<endl;
     }
     
-    Partida* partida = new Partida();
-    partida->setJuego(juego);
-    partida->setJugador1(jugador1);
-    partida->setJugador2(jugador2);
+    Partida* gamesave = new Partida();
+    gamesave->setJuego(juego);
+    gamesave->setJugador1(jugador1);
+    gamesave->setJugador2(jugador2);
     string nameGame = "Partida "+contGame;
     contGame++;
-    return partida;
+    return gamesave;
 
 }
 

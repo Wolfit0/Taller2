@@ -1,5 +1,4 @@
-#ifndef partida_h
-#define partida_h
+
 #include <iostream>
 #include "Jugador.h"
 #include "Juego.h"
@@ -102,4 +101,3 @@ void Partida::setJugador2(Jugador* jugador){
 
 
 
-#endif
