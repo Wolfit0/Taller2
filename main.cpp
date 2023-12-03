@@ -201,7 +201,8 @@ Partida* partidaContraIA(int contGame){
             break;
         }
 
-        int columnaJugador2 = minimax->minimax(juego, 0, 5, 2);
+        int columnaJugador2 = minimax->minimax(juego, 0, nivel, 2);
+        cout<<"Turno de la IA. Ingreos columna: "<<columnaJugador2;
         juego->hacerMovimiento(2, columnaJugador2);
 
         juego->dibujarJuego();
