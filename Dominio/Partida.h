@@ -34,7 +34,10 @@ public:
 */
 Partida::Partida()
 {
-    
+    this->nombrePartida = "";
+    this->juego = nullptr;
+    this->jugador1 = nullptr;
+    this->jugador2 = nullptr;
 }
 
 /**
